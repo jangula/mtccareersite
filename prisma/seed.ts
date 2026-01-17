@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, ApplicationStatus } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -324,22 +324,22 @@ async function main() {
 
       // Weighted status distribution
       const rand = Math.random()
-      let status: string
+      let status: ApplicationStatus
       let updatedAt = new Date(createdAt.getTime() + Math.random() * 7 * 24 * 60 * 60 * 1000)
 
       if (rand < 0.20) {
-        status = 'PENDING'
+        status = ApplicationStatus.PENDING
         updatedAt = createdAt
       } else if (rand < 0.40) {
-        status = 'REVIEWED'
+        status = ApplicationStatus.REVIEWED
       } else if (rand < 0.60) {
-        status = 'SHORTLISTED'
+        status = ApplicationStatus.SHORTLISTED
         updatedAt = new Date(createdAt.getTime() + Math.random() * 14 * 24 * 60 * 60 * 1000)
       } else if (rand < 0.85) {
-        status = 'REJECTED'
+        status = ApplicationStatus.REJECTED
         updatedAt = new Date(createdAt.getTime() + Math.random() * 14 * 24 * 60 * 60 * 1000)
       } else {
-        status = 'HIRED'
+        status = ApplicationStatus.HIRED
         updatedAt = new Date(createdAt.getTime() + (Math.random() * 21 + 7) * 24 * 60 * 60 * 1000)
       }
 
